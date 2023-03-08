@@ -8,6 +8,7 @@ import CountryFilter from "./CountryFilter";
 const CountryList = () => {
   const [itemOffset, setItemOffset] = useState(0);
   const [filterField, setFilterField] = useState("");
+  const [page, setPage] = useState(1);
 
   const ItemsPerPage = 5;
   const countries = useSelector((state) => state.countries);
@@ -23,23 +24,9 @@ const CountryList = () => {
   const endOffset = itemOffset + ItemsPerPage;
   const currentCountries = countriesToShow().slice(itemOffset, endOffset);
 
-  console.log(
-    "currentCountries: ",
-    currentCountries,
-    "endOffSet: ",
-    endOffset,
-    "itemOffset:",
-    itemOffset
-  );
   const handlePageClick = (event, value) => {
+    setPage(value);
     let newOffSet = ((value - 1) * ItemsPerPage) % countriesToShow().length;
-    console.log(
-      "value: ",
-      value - 1,
-      "* 5 % countriesToShow().length",
-      countriesToShow().length
-    );
-    console.log(((value - 1) * ItemsPerPage) % countriesToShow().length);
     setItemOffset(newOffSet);
   };
 
@@ -48,9 +35,11 @@ const CountryList = () => {
       <CountryFilter
         filterField={filterField}
         setFilterField={setFilterField}
+        setItemOffset={setItemOffset}
+        setPage={setPage}
       />
       <CurrentCountries currentCountries={currentCountries} />
-      <Pagination count={pageCount} onChange={handlePageClick} />
+      <Pagination count={pageCount} page={page} onChange={handlePageClick} />
     </>
   );
 };
