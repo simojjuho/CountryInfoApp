@@ -13,6 +13,8 @@ import CountryPopulation from "./CountryTable/CountryPopulation";
 import CountryLanguages from "./CountryTable/CountryLanguages";
 import CountryRegion from "./CountryTable/CountryRegion";
 import CountryName from "./CountryTable/CountryName";
+import TableHeadings from "./CountryTable/TableHeading";
+import ArrowCell from "./CountryTable/ArrowCell";
 
 const CurrentCountries = ({ currentCountries }) => {
   const navigate = useNavigate();
@@ -24,6 +26,7 @@ const CurrentCountries = ({ currentCountries }) => {
     <TableContainer>
       <Table>
         <TableBody>
+          <TableHeadings />
           {currentCountries.map((country) => {
             return (
               <TableRow
@@ -37,6 +40,7 @@ const CurrentCountries = ({ currentCountries }) => {
                 <CountryRegion region={country.region} />
                 <CountryPopulation population={country.population} />
                 <CountryLanguages languages={country.languages} />
+                <ArrowCell />
               </TableRow>
             );
           })}
