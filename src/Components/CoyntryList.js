@@ -1,24 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Pagination from "@mui/material/Pagination";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import CurrentCountries from "./CurrentCountries";
-import CountryFilter from "./CountryFilter";
+import { changeHeading } from "../reducers/headingReducer";
 
-const CountryList = () => {
+const CountryList = ({ searchField }) => {
   const [itemOffset, setItemOffset] = useState(0);
-  const [filterField, setFilterField] = useState("");
   const [page, setPage] = useState(1);
+  const dispatch = useDispatch();
+
+  useEffect(() => dispatch(changeHeading("Country Info App")), []);
 
   const ItemsPerPage = 5;
   const countries = useSelector((state) => state.countries);
   const countriesToShow = () =>
     countries.filter((country) => {
-      return country.name.official
+      return country.name.common
         .toLowerCase()
-        .includes(filterField.toLowerCase());
+        .includes(searchField.toLowerCase());
     });
-
   const pageCount = Math.ceil(countriesToShow().length / 5);
 
   const endOffset = itemOffset + ItemsPerPage;
@@ -32,12 +33,6 @@ const CountryList = () => {
 
   return (
     <>
-      <CountryFilter
-        filterField={filterField}
-        setFilterField={setFilterField}
-        setItemOffset={setItemOffset}
-        setPage={setPage}
-      />
       <CurrentCountries currentCountries={currentCountries} />
       <Pagination count={pageCount} page={page} onChange={handlePageClick} />
     </>

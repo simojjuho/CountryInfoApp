@@ -6,7 +6,14 @@ const countrySlice = createSlice({
   initialState: [],
   reducers: {
     setAll(state, action) {
-      return action.payload;
+      const result = [
+        ...action.payload.sort((a, b) => {
+          if (b.name.common > a.name.common) return -1;
+          else if (b.name.common < a.name.common) return 1;
+          else return 0;
+        }),
+      ];
+      return result;
     },
   },
 });
