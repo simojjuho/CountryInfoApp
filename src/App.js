@@ -7,6 +7,7 @@ import { getCountries } from "./reducers/countryReducer";
 import Container from "@mui/material/Container";
 import CountryView from "./Components/CountryView";
 import SearchAppBar from "./Components/AppBar";
+import Info from "./Components/Info";
 
 const App = () => {
   const [searchField, setSearchField] = useState("");
@@ -34,6 +35,7 @@ const App = () => {
           path="/countries/:id"
           element={<CountryView countries={countries} />}
         />
+        <Route path="/info" element={<Info />} />
       </Routes>
     </Container>
   );
